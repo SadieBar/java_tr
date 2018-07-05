@@ -16,3 +16,4 @@ sandbox/build/libs/sandbox.jar
 sandbox/build/classes/java/main/MyFirstProgram.class
 sandbox/build/classes/java/main/MyFirstProgram.class
 *.class
+.idea/workspace.xml
