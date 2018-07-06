@@ -1,3 +1,5 @@
+package org.ruqa;
+
 public class Point {
   private double x;
   private double y;
