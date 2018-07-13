@@ -1,7 +1,7 @@
-package tests;
+package ru.stqa.addressbook.tests;
 
 import org.testng.annotations.Test;
-import model.ContactData;
+import ru.stqa.addressbook.model.ContactData;
 
 public class ContactCreationTest extends TestBase {
 
