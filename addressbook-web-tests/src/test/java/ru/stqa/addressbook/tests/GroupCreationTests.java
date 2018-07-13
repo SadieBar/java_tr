@@ -1,5 +1,6 @@
 package ru.stqa.addressbook.tests;
 
+import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 
 import ru.stqa.addressbook.model.GroupData;
@@ -13,7 +14,7 @@ public class GroupCreationTests extends TestBase {
         app.getNavigationHelper().gotoGroupPage();
         app.getGroupHelper().initGroupCreation();
         app.getGroupHelper().fillGroupForm(new GroupData("test1", "test2", "test3"));
-        app.getGroupHelper().submitGroupCreation();
+        app.getGroupHelper().clickByLocator(By.name("submit"));
         app.getNavigationHelper().gotoGroupPage();
     }
 
