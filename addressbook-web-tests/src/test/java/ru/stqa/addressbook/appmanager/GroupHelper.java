@@ -27,4 +27,11 @@ public class GroupHelper extends BaseHelper{
   public void selectGroup() {
     clickByLocator(By.name("selected[]"));
   }
+  public void initGroupModification(){
+    clickByLocator(By.name("edit"));
+  }
+
+  public void submitGroupModification() {
+    clickByLocator(By.name("update"));
+  }
 }
