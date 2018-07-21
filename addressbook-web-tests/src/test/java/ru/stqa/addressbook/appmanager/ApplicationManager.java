@@ -26,15 +26,15 @@ public class ApplicationManager {
 
 
   public void init() {
-    if (browser==BrowserType.FIREFOX) {
+    if (browser.equals(BrowserType.FIREFOX)) {
       wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true));
-    } else if (browser==BrowserType.CHROME) {
-      //System.setProperty("webdriver.chrome.driver","D:\\Data\\Programs\\Selenium\\chromedriver_win32_20180530\\chromedriver.exe");
+    } else if (browser.equals(BrowserType.CHROME)) {
+      System.setProperty("webdriver.chrome.driver","D:\\Data\\Programs\\Selenium\\chromedriver.exe");
       wd = new ChromeDriver();
-    } else if (browser==BrowserType.IE) {
+    } else if (browser.equals(BrowserType.IE)) {
       wd = new InternetExplorerDriver();
     }
-    wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+    wd.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     wd.get("http://localhost/addressbook/");
     groupHelper = new GroupHelper(wd);
     navigationHelper = new NavigationHelper(wd);

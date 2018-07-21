@@ -12,9 +12,7 @@ public class GroupCreationTests extends TestBase {
 
         //wd.findElement(By.xpath("//div[@id='footer']//li[.='php-addressbook v8.2.5']")).click();
         app.getNavigationHelper().gotoGroupPage();
-        app.getGroupHelper().initGroupCreation();
-        app.getGroupHelper().fillGroupForm(new GroupData("test1", "test2", "test3"));
-        app.getGroupHelper().clickByLocator(By.name("submit"));
+        app.getGroupHelper().createGroup(new GroupData("test1","test2","test3"));
         app.getNavigationHelper().gotoGroupPage();
     }
 
