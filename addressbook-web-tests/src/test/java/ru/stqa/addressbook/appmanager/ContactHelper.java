@@ -51,7 +51,8 @@ public class ContactHelper extends BaseHelper {
   }
 
   public boolean isContactPresent() {
-    return isElementPresent(By.name("selected"));
+    //почему-то у меня в Хром поменялось имя на selected[]
+    return isElementPresent(By.name("selected[]"));
   }
 
   private void acceptAlert() {

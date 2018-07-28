@@ -43,6 +43,7 @@ public class GroupHelper extends BaseHelper{
   }
 
   public boolean isGroupPresent() {
-    return isElementPresent(By.name("selected"));
+    //почему-то у меня в Хроме поменялось имя элемента на selected[]
+    return isElementPresent(By.name("selected[]"));
   }
 }
