@@ -58,4 +58,8 @@ public class ContactHelper extends BaseHelper {
   private void acceptAlert() {
     wd.switchTo().alert().accept();
   }
+
+  public int getContactCount() {
+    return wd.findElements(By.name("selected[]")).size();
+  }
 }

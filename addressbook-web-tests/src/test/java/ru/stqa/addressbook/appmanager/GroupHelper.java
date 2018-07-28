@@ -46,4 +46,8 @@ public class GroupHelper extends BaseHelper{
     //почему-то у меня в Хроме поменялось имя элемента на selected[]
     return isElementPresent(By.name("selected[]"));
   }
+
+  public int getGroupCount() {
+    return wd.findElements(By.name("selected[]")).size();
+  }
 }
