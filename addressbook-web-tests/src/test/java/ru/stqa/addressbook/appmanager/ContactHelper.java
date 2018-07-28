@@ -2,8 +2,12 @@ package ru.stqa.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.stqa.addressbook.model.ContactData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactHelper extends BaseHelper {
 
@@ -36,8 +40,10 @@ public class ContactHelper extends BaseHelper {
     clickByLocator(By.xpath("//input[@type=\"submit\"]"));
   }
 
-  public void clickSelected() {
-    clickByLocator(By.xpath("//input[@name=\"selected[]\"]"));
+  public void clickSelected(int index) {
+    List<WebElement> data = wd.findElements(By.xpath("//input[@name=\"selected[]\"]"));
+    data.get(index).click();
+    //clickByLocator(By.xpath("//input[@name=\"selected[]\"]"));
   }
 
   public void clickDelete() {
@@ -61,5 +67,17 @@ public class ContactHelper extends BaseHelper {
 
   public int getContactCount() {
     return wd.findElements(By.name("selected[]")).size();
+  }
+
+  public List<ContactData> getContactList() {
+    List<ContactData> datas = new ArrayList<>();
+    List<WebElement> elements = wd.findElements(By.xpath("//tbody/tr"));
+    for (WebElement element: elements) {
+      String surname = element.findElement(By.xpath("//td[2]")).getText();
+      String name = element.findElement(By.xpath("//td[3]")).getText();
+      ContactData data = new ContactData(name, surname, null, null, null);
+      datas.add(data);
+    }
+    return datas;
   }
 }
