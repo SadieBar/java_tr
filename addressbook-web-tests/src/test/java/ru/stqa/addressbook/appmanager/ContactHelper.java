@@ -8,6 +8,8 @@ import ru.stqa.addressbook.model.ContactData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ContactHelper extends BaseHelper {
 
@@ -32,8 +34,10 @@ public class ContactHelper extends BaseHelper {
     type(By.name("email"),contactData.getEmail());
   }
 
-  public void clickEdit() {
-    clickByLocator(By.xpath("//img[@title=\"Edit\"]"));
+  public void clickEdit(int index) {
+    List<WebElement> elms = wd.findElements(By.xpath("//img[@title=\"Edit\"]"));
+    elms.get(index).click();
+    //clickByLocator(By.xpath("//img[@title=\"Edit\"]"));
   }
 
   public void clickUpdate() {
@@ -71,11 +75,23 @@ public class ContactHelper extends BaseHelper {
 
   public List<ContactData> getContactList() {
     List<ContactData> datas = new ArrayList<>();
+    //не работает строчка ниже
     List<WebElement> elements = wd.findElements(By.xpath("//tbody/tr"));
-    for (WebElement element: elements) {
-      String surname = element.findElement(By.xpath("//td[2]")).getText();
-      String name = element.findElement(By.xpath("//td[3]")).getText();
-      ContactData data = new ContactData(name, surname, null, null, null);
+    for (int i=0;i<elements.size()-1;i++) {
+      String path = "//tbody/tr["+(i+2)+"]";
+      String surname = wd.findElement(By.xpath(path+"/td[2]")).getText();
+      String name = wd.findElement(By.xpath(path+"/td[3]")).getText();
+      String ids = wd.findElement(By.xpath(path+"/td[7]/a")).getAttribute("href");
+      String pattern = ".*id=(\\d+)";
+      Pattern r = Pattern.compile(pattern);
+      Matcher m = r.matcher(ids);
+      int id = 0;
+      if (m.find()) {
+        id = Integer.parseInt(m.group(1));
+      } else {
+        System.out.println("Error matching!");
+      }
+      ContactData data = new ContactData(name, surname, null, null, null, id);
       datas.add(data);
     }
     return datas;
