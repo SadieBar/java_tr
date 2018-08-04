@@ -41,7 +41,7 @@ public class GroupHelper extends BaseHelper{
     clickByLocator(By.name("update"));
   }
 
-  public void createGroup(GroupData groupData) {
+  public void create(GroupData groupData) {
     initGroupCreation();
     fillGroupForm(groupData);
     clickByLocator(By.name("submit"));
@@ -56,7 +56,7 @@ public class GroupHelper extends BaseHelper{
     return wd.findElements(By.name("selected[]")).size();
   }
 
-  public List<GroupData> getGroupList() {
+  public List<GroupData> list() {
     List<GroupData> groups = new ArrayList<>();
     List<WebElement> elms = wd.findElements(By.cssSelector("span.group"));
     for (WebElement elm: elms) {
@@ -67,4 +67,18 @@ public class GroupHelper extends BaseHelper{
     }
     return groups;
   }
+
+  public void modify(int index, GroupData newdata) {
+    selectGroup(index);
+    initGroupModification();
+    fillGroupForm(newdata);
+    submitGroupModification();
+  }
+
+  public void delete(int index) {
+    selectGroup(index);
+    deleteSelectedGroups();
+  }
+
+
 }

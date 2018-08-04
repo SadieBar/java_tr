@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 
 public class ContactCreationTest extends TestBase {
-
+//@Test(enabled=false)
     @Test
     public void contactCreationTest() {
         //app.getContactHelper().gotoAddNewContact();
