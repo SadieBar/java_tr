@@ -21,7 +21,7 @@ public class GroupDeletionTests extends TestBase {
         //int before = app.group().getGroupCount();
         List<GroupData> before = app.group().list();
         int index = before.size()-1;
-        delete(index);
+        app.group().delete(index);
         app.goTo().groupPage();
         //int after = app.group().getGroupCount();
         List<GroupData> after = app.group().list();

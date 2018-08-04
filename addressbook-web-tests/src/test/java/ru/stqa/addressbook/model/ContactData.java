@@ -3,8 +3,8 @@ package ru.stqa.addressbook.model;
 import java.util.Objects;
 
 public class ContactData {
-  private final String name;
-  private final String surname;
+  private String name;
+  private String surname;
   private String nick;
   private String phone;
   private String email;

@@ -3,9 +3,10 @@ package ru.stqa.addressbook.model;
 import java.util.Objects;
 
 public class GroupData {
-  private final String groupName;
-  private final String header;
-  private final String footer;
+  private String groupName;
+  private String header;
+  private String footer;
+  private int id;
 
   public void setId(int id) {
     this.id = id;
@@ -25,7 +26,7 @@ public class GroupData {
     return Objects.hash(groupName, id);
   }
 
-  private int id;
+
 
   public int getId() {
     return id;
