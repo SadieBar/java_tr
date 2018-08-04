@@ -7,7 +7,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.stqa.addressbook.model.ContactData;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,6 +18,7 @@ public class ContactHelper extends BaseHelper {
   public ContactHelper(WebDriver wd) {
     super(wd);
   }
+
   public void submitContact() {
     clickByLocator(By.name("theform"));
     clickByLocator(By.xpath("//div[@id='content']/form/input[21]"));
@@ -27,11 +30,11 @@ public class ContactHelper extends BaseHelper {
   }
 
   public void fillContactForm(ContactData contactData) {
-    type(By.name("firstname"),contactData.getName());
-    type(By.name("lastname"),contactData.getSurname());
-    type(By.name("nickname"),contactData.getNick());
-    type(By.name("mobile"),contactData.getPhone());
-    type(By.name("email"),contactData.getEmail());
+    type(By.name("firstname"), contactData.getName());
+    type(By.name("lastname"), contactData.getSurname());
+    type(By.name("nickname"), contactData.getNick());
+    type(By.name("mobile"), contactData.getPhone());
+    type(By.name("email"), contactData.getEmail());
   }
 
   public void clickEdit(int index) {
@@ -40,20 +43,31 @@ public class ContactHelper extends BaseHelper {
     //clickByLocator(By.xpath("//img[@title=\"Edit\"]"));
   }
 
+  public void clickEditById(ContactData modifiedData) {
+    String xpath = "//a[@href='edit.php?id="+modifiedData.getId()+"']";
+    wd.findElement(By.xpath(xpath)).click();
+  }
+
   public void clickUpdate() {
     clickByLocator(By.xpath("//input[@type=\"submit\"]"));
   }
 
-  public void clickSelected(int index) {
+  public void clickSelectedById(int index) {
     List<WebElement> data = wd.findElements(By.xpath("//input[@name=\"selected[]\"]"));
     data.get(index).click();
     //clickByLocator(By.xpath("//input[@name=\"selected[]\"]"));
+  }
+
+  public void clickSelectedById(ContactData deletedContact) {
+    WebElement data = wd.findElement(By.cssSelector("input[id='"+deletedContact.getId()+"']"));
+    data.click();
   }
 
   public void clickDelete() {
     clickByLocator(By.xpath("//input[@value=\"Delete\"]"));
     acceptAlert();
   }
+
   public void createContact(ContactData data) {
     gotoAddNewContact();
     fillContactForm(data);
@@ -73,15 +87,40 @@ public class ContactHelper extends BaseHelper {
     return wd.findElements(By.name("selected[]")).size();
   }
 
-  public List<ContactData> getContactList() {
+
+  /*public List<ContactData> getContactList() {
     List<ContactData> datas = new ArrayList<>();
     //не работает строчка ниже
     List<WebElement> elements = wd.findElements(By.xpath("//tbody/tr"));
-    for (int i=0;i<elements.size()-1;i++) {
-      String path = "//tbody/tr["+(i+2)+"]";
-      String surname = wd.findElement(By.xpath(path+"/td[2]")).getText();
-      String name = wd.findElement(By.xpath(path+"/td[3]")).getText();
-      String ids = wd.findElement(By.xpath(path+"/td[7]/a")).getAttribute("href");
+    for (int i = 0; i < elements.size() - 1; i++) {
+      String path = "//tbody/tr[" + (i + 2) + "]";
+      String surname = wd.findElement(By.xpath(path + "/td[2]")).getText();
+      String name = wd.findElement(By.xpath(path + "/td[3]")).getText();
+      String ids = wd.findElement(By.xpath(path + "/td[7]/a")).getAttribute("href");
+      String pattern = ".*id=(\\d+)";
+      Pattern r = Pattern.compile(pattern);
+      Matcher m = r.matcher(ids);
+      int id = 0;
+      if (m.find()) {
+        id = Integer.parseInt(m.group(1));
+      } else {
+        System.out.println("Error matching!");
+      }
+      ContactData data = new ContactData().withName(name).withSurname(surname).withId(id);
+      datas.add(data);
+    }
+    return datas;
+  }*/
+
+  public Set<ContactData> all() {
+    Set<ContactData> datas = new HashSet<ContactData>();
+    //не работает строчка ниже
+    List<WebElement> elements = wd.findElements(By.xpath("//tbody/tr"));
+    for (int i = 0; i < elements.size() - 1; i++) {
+      String path = "//tbody/tr[" + (i + 2) + "]";
+      String surname = wd.findElement(By.xpath(path + "/td[2]")).getText();
+      String name = wd.findElement(By.xpath(path + "/td[3]")).getText();
+      String ids = wd.findElement(By.xpath(path + "/td[7]/a")).getAttribute("href");
       String pattern = ".*id=(\\d+)";
       Pattern r = Pattern.compile(pattern);
       Matcher m = r.matcher(ids);
@@ -96,4 +135,7 @@ public class ContactHelper extends BaseHelper {
     }
     return datas;
   }
+
+
+
 }

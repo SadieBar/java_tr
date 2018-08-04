@@ -7,7 +7,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.stqa.addressbook.model.GroupData;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class GroupHelper extends BaseHelper{
 
@@ -33,6 +35,12 @@ public class GroupHelper extends BaseHelper{
     wd.findElements(By.name("selected[]")).get(index).click();
     //clickByLocator(By.name("selected[]"));
   }
+
+  public void selectGroupById(int id) {
+    wd.findElement(By.cssSelector("input[value='"+id+"']")).click();
+    //clickByLocator(By.name("selected[]"));
+  }
+
   public void initGroupModification(){
     clickByLocator(By.name("edit"));
   }
@@ -56,8 +64,19 @@ public class GroupHelper extends BaseHelper{
     return wd.findElements(By.name("selected[]")).size();
   }
 
-  public List<GroupData> list() {
+  /*public List<GroupData> list() {
     List<GroupData> groups = new ArrayList<>();
+    List<WebElement> elms = wd.findElements(By.cssSelector("span.group"));
+    for (WebElement elm: elms) {
+      String name = elm.getText();
+      int id = Integer.parseInt(elm.findElement(By.tagName("input")).getAttribute("value"));
+      groups.add(new GroupData().withGroupName(name).withId(id));
+    }
+    return groups;
+  }*/
+
+  public Set<GroupData> all() {
+    Set<GroupData> groups = new HashSet<GroupData>();
     List<WebElement> elms = wd.findElements(By.cssSelector("span.group"));
     for (WebElement elm: elms) {
       String name = elm.getText();
@@ -67,8 +86,8 @@ public class GroupHelper extends BaseHelper{
     return groups;
   }
 
-  public void modify(int index, GroupData newdata) {
-    selectGroup(index);
+  public void modify(GroupData newdata) {
+    selectGroupById(newdata.getId());
     initGroupModification();
     fillGroupForm(newdata);
     submitGroupModification();
@@ -80,4 +99,8 @@ public class GroupHelper extends BaseHelper{
   }
 
 
+  public void delete(GroupData g) {
+    selectGroupById(g.getId());
+    deleteSelectedGroups();
+  }
 }

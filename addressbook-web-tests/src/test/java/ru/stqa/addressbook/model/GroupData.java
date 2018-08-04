@@ -42,8 +42,6 @@ public class GroupData {
     return Objects.hash(groupName, id);
   }
 
-
-
   public int getId() {
     return id;
   }
