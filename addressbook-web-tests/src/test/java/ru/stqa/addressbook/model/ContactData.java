@@ -37,7 +37,7 @@ public class ContactData {
             '}';
   }
 
-  public ContactData(String name, String surname, String nick, String phone, String email, int id) {
+  /*public ContactData(String name, String surname, String nick, String phone, String email, int id) {
     this.name = name;
     this.surname = surname;
     this.nick = nick;
@@ -54,7 +54,7 @@ public class ContactData {
     this.email = email;
     this.id = Integer.MAX_VALUE;
   }
-
+*/
 
   public String getName() {
     return name;
@@ -78,17 +78,33 @@ public class ContactData {
 
   public int getId() { return id;}
 
-  public void setNick(String set) {
-    nick = set;
+  public ContactData withName(String name) {
+    this.name = name;
+    return this;
   }
 
-  public void setPhone(String set) {
-    phone = set;
+  public ContactData withSurname(String surname) {
+    this.surname = surname;
+    return this;
   }
 
-  public void setEmail(String set) {
-    email = set;
+  public ContactData withNick(String nick) {
+    this.nick = nick;
+    return this;
   }
 
-  public void setId(int set) {id = set;}
+  public ContactData withPhone(String phone) {
+    this.phone = phone;
+    return this;
+  }
+
+  public ContactData withEmail(String email) {
+    this.email = email;
+    return this;
+  }
+
+  public ContactData withId(int id) {
+    this.id = id;
+    return this;
+  }
 }

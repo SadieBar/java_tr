@@ -6,10 +6,26 @@ public class GroupData {
   private String groupName;
   private String header;
   private String footer;
-  private int id;
+  private int id = Integer.MAX_VALUE;
 
-  public void setId(int id) {
+  public GroupData withGroupName(String groupName) {
+    this.groupName = groupName;
+    return this;
+  }
+
+  public GroupData withHeader(String header) {
+    this.header = header;
+    return this;
+  }
+
+  public GroupData withFooter(String footer) {
+    this.footer = footer;
+    return this;
+  }
+
+  public GroupData withId(int id) {
     this.id = id;
+    return this;
   }
 
   @Override
@@ -33,7 +49,7 @@ public class GroupData {
   }
 
 
-  public GroupData(String groupName, String header, String footer) {
+/*  public GroupData(String groupName, String header, String footer) {
     this.groupName = groupName;
     this.header = header;
     this.footer = footer;
@@ -46,7 +62,7 @@ public class GroupData {
     this.footer = footer;
     this.id = id;
   }
-
+*/
   public String getGroupName() {
     return groupName;
   }

@@ -62,8 +62,7 @@ public class GroupHelper extends BaseHelper{
     for (WebElement elm: elms) {
       String name = elm.getText();
       int id = Integer.parseInt(elm.findElement(By.tagName("input")).getAttribute("value"));
-      GroupData data = new GroupData(name,null,null, id);
-      groups.add(data);
+      groups.add(new GroupData().withGroupName(name).withId(id));
     }
     return groups;
   }

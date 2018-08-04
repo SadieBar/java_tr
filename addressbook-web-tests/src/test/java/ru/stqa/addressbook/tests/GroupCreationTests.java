@@ -16,7 +16,7 @@ public class GroupCreationTests extends TestBase {
         app.goTo().groupPage();
         //int before = app.group().getGroupCount();
         List<GroupData> before = app.group().list();
-        GroupData group = new GroupData("test1","test2","test3");
+        GroupData group = new GroupData().withGroupName("test1").withHeader("test2").withFooter("test3");
         app.group().create(group);
         app.goTo().groupPage();
         List<GroupData> after = app.group().list();
@@ -27,7 +27,7 @@ public class GroupCreationTests extends TestBase {
         for (GroupData g : after) {
             if (g.getId()>max) max1 = g.getId();
         }*/
-        group.setId(after.stream().max((Comparator<GroupData>) (o1, o2) -> Integer.compare(o1.getId(),o2.getId())).get().getId());
+        group.withId(after.stream().max((Comparator<GroupData>) (o1, o2) -> Integer.compare(o1.getId(),o2.getId())).get().getId());
         before.add(group);
 
         Comparator<? super GroupData> ById = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());

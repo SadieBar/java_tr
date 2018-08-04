@@ -91,7 +91,7 @@ public class ContactHelper extends BaseHelper {
       } else {
         System.out.println("Error matching!");
       }
-      ContactData data = new ContactData(name, surname, null, null, null, id);
+      ContactData data = new ContactData().withName(name).withSurname(surname).withId(id);
       datas.add(data);
     }
     return datas;
