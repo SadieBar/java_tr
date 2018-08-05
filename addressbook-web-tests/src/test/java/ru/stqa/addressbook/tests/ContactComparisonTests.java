@@ -16,7 +16,7 @@ public class ContactComparisonTests extends TestBase {
     if (!app.getContactHelper().isContactPresent()) {
       app.getContactHelper().createContact(new ContactData().withName("Ivan")
               .withSurname("Ivanov").withNick("ii").withMobilePhone("+79151111111")
-              .withEmail("iivanov@mail.ru"));
+              .withEmail("iivanov@mail.ru").withAddress("abc123").withWorkPhone("111").withHomePhone("222"));
     }
     ContactData contact = app.getContactHelper().all().iterator().next();
     ContactData contactInfoFromEditForm = app.getContactHelper().infoFromEditForm(contact);

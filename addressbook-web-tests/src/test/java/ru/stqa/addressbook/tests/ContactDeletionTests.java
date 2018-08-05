@@ -14,7 +14,7 @@ public class ContactDeletionTests extends TestBase{
     if (!app.getContactHelper().isContactPresent()) {
       app.getContactHelper().createContact(new ContactData().withName("Ivan")
               .withSurname("Ivanov").withNick("ii").withMobilePhone("+79151111111")
-              .withEmail("iivanov@mail.ru"));
+              .withEmail("iivanov@mail.ru").withAddress("abc123").withWorkPhone("111").withHomePhone("222"));
     }
     Contacts before = app.getContactHelper().all();
     ContactData deletedContact = before.iterator().next();

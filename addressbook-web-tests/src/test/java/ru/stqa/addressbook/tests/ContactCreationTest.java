@@ -19,7 +19,7 @@ public class ContactCreationTest extends TestBase {
         Contacts before = app.getContactHelper().all();
         ContactData contact = new ContactData()
                 .withName("Ivan").withSurname("Ivanov").withNick("ii")
-                .withMobilePhone("+79151111111").withWorkPhone("222").withHomePhone("111").withEmail("iivanov@mail.ru");
+                .withMobilePhone("+79151111111").withWorkPhone("222").withHomePhone("111").withEmail("iivanov@mail.ru").withAddress("abc123");
         app.getContactHelper().createContact(contact);
         Contacts after = app.getContactHelper().all();
         //int after = app.getContactHelper().getContactCount();
