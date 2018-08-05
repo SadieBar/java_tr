@@ -1,15 +1,8 @@
 package ru.stqa.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.addressbook.model.ContactData;
 import ru.stqa.addressbook.model.Contacts;
-import ru.stqa.addressbook.model.GroupData;
-
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -26,7 +19,7 @@ public class ContactCreationTest extends TestBase {
         Contacts before = app.getContactHelper().all();
         ContactData contact = new ContactData()
                 .withName("Ivan").withSurname("Ivanov").withNick("ii")
-                .withPhone("+79151111111").withEmail("iivanov@mail.ru");
+                .withMobilePhone("+79151111111").withWorkPhone("222").withHomePhone("111").withEmail("iivanov@mail.ru");
         app.getContactHelper().createContact(contact);
         Contacts after = app.getContactHelper().all();
         //int after = app.getContactHelper().getContactCount();

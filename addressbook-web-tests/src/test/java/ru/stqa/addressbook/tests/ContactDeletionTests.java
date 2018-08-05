@@ -1,11 +1,8 @@
 package ru.stqa.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.addressbook.model.ContactData;
 import ru.stqa.addressbook.model.Contacts;
-
-import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -16,7 +13,7 @@ public class ContactDeletionTests extends TestBase{
   public void contactDeletion(){
     if (!app.getContactHelper().isContactPresent()) {
       app.getContactHelper().createContact(new ContactData().withName("Ivan")
-              .withSurname("Ivanov").withNick("ii").withPhone("+79151111111")
+              .withSurname("Ivanov").withNick("ii").withMobilePhone("+79151111111")
               .withEmail("iivanov@mail.ru"));
     }
     Contacts before = app.getContactHelper().all();

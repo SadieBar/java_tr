@@ -4,12 +4,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.addressbook.model.ContactData;
 import ru.stqa.addressbook.model.Contacts;
-import ru.stqa.addressbook.model.GroupData;
-
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -19,7 +13,7 @@ public class ContactModificationTests extends TestBase {
   public void contactModification() {
     if (!app.getContactHelper().isContactPresent()) {
       app.getContactHelper().createContact(new ContactData().withName("Ivan")
-              .withSurname("Ivanov").withNick("ii").withPhone("+79151111111")
+              .withSurname("Ivanov").withNick("ii").withMobilePhone("+79151111111")
               .withEmail("iivanov@mail.ru"));
     }
     //int before = app.getContactHelper().getContactCount();
@@ -28,7 +22,7 @@ public class ContactModificationTests extends TestBase {
     //int index = before.size()-1;
     app.getContactHelper().clickEditById(modifiedData);
     ContactData newdata = new ContactData().withName("Peter")
-            .withSurname("Petrov").withNick("pp").withPhone("+79152222222")
+            .withSurname("Petrov").withNick("pp").withMobilePhone("+79152222222")
             .withEmail("ppetrov@mail.ru");
     app.getContactHelper().fillContactForm(newdata);
     app.getContactHelper().clickUpdate();
