@@ -54,6 +54,7 @@ public class GroupHelper extends BaseHelper{
     initGroupCreation();
     fillGroupForm(groupData);
     clickByLocator(By.name("submit"));
+    groupCache = null;
   }
 
   public boolean isGroupPresent() {
@@ -61,7 +62,7 @@ public class GroupHelper extends BaseHelper{
     return isElementPresent(By.name("selected[]"));
   }
 
-  public int getGroupCount() {
+  public int count() {
     return wd.findElements(By.name("selected[]")).size();
   }
 
@@ -76,15 +77,18 @@ public class GroupHelper extends BaseHelper{
     return groups;
   }*/
 
+  private Groups groupCache = null;
+
   public Groups all() {
-    Groups groups = new Groups();
+    if (groupCache!=null) return new Groups(groupCache);
+    groupCache = new Groups();
     List<WebElement> elms = wd.findElements(By.cssSelector("span.group"));
     for (WebElement elm: elms) {
       String name = elm.getText();
       int id = Integer.parseInt(elm.findElement(By.tagName("input")).getAttribute("value"));
-      groups.add(new GroupData().withGroupName(name).withId(id));
+      groupCache.add(new GroupData().withGroupName(name).withId(id));
     }
-    return groups;
+    return new Groups(groupCache);
   }
 
   public void modify(GroupData newdata) {
@@ -92,16 +96,19 @@ public class GroupHelper extends BaseHelper{
     initGroupModification();
     fillGroupForm(newdata);
     submitGroupModification();
+    groupCache = null;
   }
 
   public void delete(int index) {
     selectGroup(index);
     deleteSelectedGroups();
+    groupCache = null;
   }
 
 
   public void delete(GroupData g) {
     selectGroupById(g.getId());
     deleteSelectedGroups();
+    groupCache = null;
   }
 }

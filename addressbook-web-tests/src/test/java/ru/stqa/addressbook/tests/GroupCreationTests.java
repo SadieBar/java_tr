@@ -1,15 +1,9 @@
 package ru.stqa.addressbook.tests;
 
-import org.hamcrest.CoreMatchers;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import ru.stqa.addressbook.model.GroupData;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
-import org.hamcrest.MatcherAssert;
 import ru.stqa.addressbook.model.Groups;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -21,15 +15,17 @@ public class GroupCreationTests extends TestBase {
     public void testGroupCreation() {
         //wd.findElement(By.xpath("//div[@id='footer']//li[.='php-addressbook v8.2.5']")).click();
         app.goTo().groupPage();
-        //int before = app.group().getGroupCount();
+        //int before = app.group().count();
         Groups before = app.group().all();
         GroupData group = new GroupData().withGroupName("test1").withHeader("test2").withFooter("test3");
         app.group().create(group);
         app.goTo().groupPage();
+        assertThat(app.group().count(),equalTo(before.size()+1));
+
         Groups after = app.group().all();
-        //int after = app.group().getGroupCount();
+        //int after = app.group().count();
         //Assert.assertEquals(after.size(), before.size() + 1);
-        assertThat(after.size(),equalTo(before.size()+1));
+        //assertThat(after.size(),equalTo(before.size()+1));
 
         /*int max1 = 0;
         for (GroupData g : after) {
@@ -45,6 +41,20 @@ public class GroupCreationTests extends TestBase {
         //Assert.assertEquals(before, after);
         assertThat(after, equalTo(before.withAdded(group.
                 withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
+    }
+
+    @Test
+    public void testBadGroupCreation() {
+        app.goTo().groupPage();
+        Groups before = app.group().all();
+        GroupData group = new GroupData().withGroupName("test1'").withHeader("test2").withFooter("test3");
+        app.group().create(group);
+        app.goTo().groupPage();
+        assertThat(app.group().count(),equalTo(before.size()));
+
+        Groups after = app.group().all();
+
+        assertThat(after, equalTo(before));
     }
 
 }

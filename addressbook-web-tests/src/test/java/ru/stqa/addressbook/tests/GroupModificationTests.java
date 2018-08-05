@@ -40,8 +40,10 @@ public class GroupModificationTests extends TestBase {
     app.group().modify(newdata);
     app.goTo().groupPage();
     //int after = app.getContactHelper().getContactCount();
+    assertThat(app.group().count(),equalTo(before.size()));
+
     Groups after = app.group().all();
-    assertEquals(after.size(), before.size());
+    //assertEquals(after.size(), before.size());
 
     //before.remove(modifiedGroup);
     //before.add(newdata);
