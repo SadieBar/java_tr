@@ -3,12 +3,16 @@ package ru.stqa.addressbook.tests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.addressbook.model.ContactData;
+import ru.stqa.addressbook.model.Contacts;
 import ru.stqa.addressbook.model.GroupData;
 
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactModificationTests extends TestBase {
   @Test
@@ -19,7 +23,7 @@ public class ContactModificationTests extends TestBase {
               .withEmail("iivanov@mail.ru"));
     }
     //int before = app.getContactHelper().getContactCount();
-    Set<ContactData> before = app.getContactHelper().all();
+    Contacts before = app.getContactHelper().all();
     ContactData modifiedData = before.iterator().next();
     //int index = before.size()-1;
     app.getContactHelper().clickEditById(modifiedData);
@@ -29,16 +33,17 @@ public class ContactModificationTests extends TestBase {
     app.getContactHelper().fillContactForm(newdata);
     app.getContactHelper().clickUpdate();
     //int after = app.getContactHelper().getContactCount();
-    Set<ContactData> after = app.getContactHelper().all();
+    Contacts after = app.getContactHelper().all();
     Assert.assertEquals(after.size(), before.size());
 
-    newdata.withId(modifiedData.getId());
-    before.remove(modifiedData);
-    before.add(newdata);
+    //newdata.withId(modifiedData.getId());
+    //before.remove(modifiedData);
+    //before.add(newdata);
     //Comparator<? super ContactData> ById = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
     //before.sort(ById);
     //after.sort(ById);
-    Assert.assertEquals(before, after);
-
+    //Assert.assertEquals(before, after);
+    assertThat(after, equalTo(before.without(modifiedData)
+            .withAdded(newdata.withId(modifiedData.getId()))));
   }
 }
