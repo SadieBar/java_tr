@@ -5,6 +5,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 
+import java.io.File;
+
 public class BaseHelper {
   protected WebDriver wd;
 
@@ -33,6 +35,10 @@ public class BaseHelper {
     clickByLocator(group_name_locator);
     wd.findElement(group_name_locator).clear();
     wd.findElement(group_name_locator).sendKeys(groupName);
+  }
+
+  protected void attach(By group_name_locator, File file) {
+    wd.findElement(group_name_locator).sendKeys(file.getAbsolutePath());
   }
 
   public boolean isElementPresent(By locator) {
