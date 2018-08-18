@@ -1,23 +1,65 @@
 package ru.stqa.addressbook.tests;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.thoughtworks.xstream.XStream;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import ru.stqa.addressbook.model.GroupData;
 
 import ru.stqa.addressbook.model.Groups;
 
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GroupCreationTests extends TestBase {
 
-    @Test
-    public void testGroupCreation() {
+    @DataProvider
+    public Iterator<Object[]> velidGroupsFromXml() throws IOException {
+        try(BufferedReader reader = new BufferedReader(new FileReader(new File("addressbook-web-tests/src/test/resources/groups.xml")))) {
+            String xml = "";
+            String line = reader.readLine();
+            ;
+            while (line != null) {
+                xml += line;
+                line = reader.readLine();
+            }
+            XStream xStream = new XStream();
+            xStream.processAnnotations(GroupData.class);
+            List<GroupData> groups = (List<GroupData>) xStream.fromXML(xml);
+            return groups.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
+        }
+    }
+    @DataProvider
+    public Iterator<Object[]> velidGroupsFromJson() throws IOException {
+        try(BufferedReader reader = new BufferedReader(new FileReader(new File("addressbook-web-tests/src/test/resources/groups.json")))) {
+            String json = "";
+            String line = reader.readLine();
+            ;
+            while (line != null) {
+                json += line;
+                line = reader.readLine();
+            }
+            Gson gson = new Gson();
+            List<GroupData> groups = gson.fromJson(json, new TypeToken<List<GroupData>>() {
+            }.getType());
+            return groups.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
+        }
+    }
+    @Test(dataProvider = "velidGroupsFromXml")
+    public void testGroupCreation(GroupData group) {
         //wd.findElement(By.xpath("//div[@id='footer']//li[.='php-addressbook v8.2.5']")).click();
+        //GroupData group = new GroupData().withGroupName(name).withHeader(header).withFooter(footer);
         app.goTo().groupPage();
         //int before = app.group().count();
         Groups before = app.group().all();
-        GroupData group = new GroupData().withGroupName("test1").withHeader("test2").withFooter("test3");
         app.group().create(group);
         app.goTo().groupPage();
         assertThat(app.group().count(),equalTo(before.size()+1));
@@ -43,7 +85,7 @@ public class GroupCreationTests extends TestBase {
                 withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
     }
 
-    @Test
+    /*@Test
     public void testBadGroupCreation() {
         app.goTo().groupPage();
         Groups before = app.group().all();
@@ -55,6 +97,6 @@ public class GroupCreationTests extends TestBase {
         Groups after = app.group().all();
 
         assertThat(after, equalTo(before));
-    }
+    }*/
 
 }
