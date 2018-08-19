@@ -13,7 +13,7 @@ import java.util.Objects;
 
 @XStreamAlias("group")
 @Entity
-@Table(appliesTo = "group_list")
+@javax.persistence.Table(name="group_list")
 public class GroupData {
   @Expose
   @Column(name="group_name")
