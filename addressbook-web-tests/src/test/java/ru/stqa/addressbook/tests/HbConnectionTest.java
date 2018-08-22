@@ -9,7 +9,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ru.stqa.addressbook.model.GroupData;
 
-import java.awt.*;
 import java.util.List;
 
 public class HbConnectionTest {
@@ -30,11 +29,12 @@ public class HbConnectionTest {
   }
 
   @BeforeClass
-  protected void setUp() throws Exception {
+  protected void setUp() {
     // A SessionFactory is set up once for an application!
     final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
             .configure() // configures settings from hibernate.cfg.xml
             .build();
+
     try {
       sessionFactory = new MetadataSources( registry ).buildMetadata().buildSessionFactory();
     }
