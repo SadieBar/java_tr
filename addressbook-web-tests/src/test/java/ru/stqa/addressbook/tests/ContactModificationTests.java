@@ -5,29 +5,32 @@ import org.testng.annotations.Test;
 import ru.stqa.addressbook.model.ContactData;
 import ru.stqa.addressbook.model.Contacts;
 
+import java.io.File;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactModificationTests extends TestBase {
   @Test
   public void contactModification() {
-    if (!app.getContactHelper().isContactPresent()) {
+    //if (!app.getContactHelper().isContactPresent())
+    if (app.db().contacts().size()==0){
       app.getContactHelper().createContact(new ContactData().withName("Ivan")
               .withSurname("Ivanov").withNick("ii").withMobilePhone("+79151111111")
               .withEmail("iivanov@mail.ru").withAddress("abc123").withWorkPhone("111").withHomePhone("222"));
     }
     //int before = app.getContactHelper().getContactCount();
-    Contacts before = app.getContactHelper().all();
+    Contacts before = app.db().contacts();//app.getContactHelper().all();
     ContactData modifiedData = before.iterator().next();
     //int index = before.size()-1;
     app.getContactHelper().clickEditById(modifiedData);
     ContactData newdata = new ContactData().withName("Peter")
             .withSurname("Petrov").withNick("pp").withMobilePhone("+79152222222")
-            .withEmail("ppetrov@mail.ru").withWorkPhone("123").withHomePhone("321").withAddress("abc321");
+            .withEmail("ppetrov@mail.ru").withWorkPhone("123").withHomePhone("321").withAddress("abc321").withPhoto(new File("addressbook-web-tests\\src\\test\\resources\\stru.png"));
     app.getContactHelper().fillContactForm(newdata);
     app.getContactHelper().clickUpdate();
     //int after = app.getContactHelper().getContactCount();
-    Contacts after = app.getContactHelper().all();
+    Contacts after = app.db().contacts();// app.getContactHelper().all();
     Assert.assertEquals(after.size(), before.size());
 
     //newdata.withId(modifiedData.getId());

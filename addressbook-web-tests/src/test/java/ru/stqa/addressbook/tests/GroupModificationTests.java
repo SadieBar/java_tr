@@ -19,10 +19,12 @@ import static org.testng.Assert.assertEquals;
 public class GroupModificationTests extends TestBase {
   @BeforeMethod
   public void ensurePreconditions() {
-    app.goTo().groupPage();
-    if (app.group().all().size() == 0)//(!app.group().isGroupPresent()) {
+    if (app.db().groups().size()==0) {
+      app.goTo().groupPage();
+      //if (app.group().all().size() == 0)//(!app.group().isGroupPresent()) {
       app.group().create(new GroupData().withGroupName("test1"));
       app.goTo().groupPage();
+     }
     }
 
 
@@ -30,7 +32,8 @@ public class GroupModificationTests extends TestBase {
   @Test
   public void groupModification() {
     //int before = app.getContactHelper().getContactCount();
-    Groups before = app.group().all();
+    Groups before = app.db().groups();//app.group().all();
+    app.goTo().groupPage();
     GroupData modifiedGroup = before.iterator().next();
     //int index = before.size()-1;
     GroupData newdata = new GroupData()
@@ -42,7 +45,7 @@ public class GroupModificationTests extends TestBase {
     //int after = app.getContactHelper().getContactCount();
     assertThat(app.group().count(),equalTo(before.size()));
 
-    Groups after = app.group().all();
+    Groups after = app.db().groups();//app.group().all();
     //assertEquals(after.size(), before.size());
 
     //before.remove(modifiedGroup);

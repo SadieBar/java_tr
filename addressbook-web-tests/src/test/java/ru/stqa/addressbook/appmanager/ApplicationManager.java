@@ -25,6 +25,7 @@ public class ApplicationManager {
   private SessionHelper sessionHelper;
   private ContactHelper contactHelper;
   private String browser;
+  private DbHelper dbHelper;
 
   public ApplicationManager(String browser) {
     this.browser = browser;
@@ -33,6 +34,7 @@ public class ApplicationManager {
 
 
   public void init() throws IOException {
+    dbHelper = new DbHelper();
     String target = System.getProperty("target", "local");
     properties.load(new FileReader(new File(String.format("addressbook-web-tests/src/test/resources/%s.properties", target))));
 
@@ -51,6 +53,7 @@ public class ApplicationManager {
     sessionHelper = new SessionHelper(wd);
     contactHelper = new ContactHelper(wd);
     sessionHelper.login(properties.getProperty("web.admin-login"), properties.getProperty("web.admin-pass"));
+
   }
 
 
@@ -69,4 +72,8 @@ public class ApplicationManager {
   }
 
   public ContactHelper getContactHelper() {return contactHelper;}
+
+  public DbHelper db() {
+    return dbHelper;
+  }
 }
