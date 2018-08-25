@@ -34,7 +34,7 @@ public class HttpSession {
       post.setEntity(new UrlEncodedFormEntity(params));
       CloseableHttpResponse response = httpclient.execute(post);
       String body = getTextFrom(response);
-      return body.contains(String.format("<span class=\"italic\">%s</span>",username));
+      return body.contains(String.format("<span class=\"user-info\">%s</span>",username));//этот шаблон поменялся по сравнению с лекцией
     }
 
     private String getTextFrom(CloseableHttpResponse response) throws IOException {
@@ -49,6 +49,6 @@ public class HttpSession {
       HttpGet get = new HttpGet(app.getProperty("web.baseUrl") + "/index.php");
       CloseableHttpResponse response = httpclient.execute(get);
       String body = getTextFrom(response);
-      return body.contains(String.format("<span class=\"italic\">%s</span>",username));
+      return body.contains(String.format("<span class=\"user-info\">%s</span>",username));
     }
 }
