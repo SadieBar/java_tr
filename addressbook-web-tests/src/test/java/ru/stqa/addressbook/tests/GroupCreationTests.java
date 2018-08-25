@@ -62,12 +62,12 @@ public class GroupCreationTests extends TestBase {
         //GroupData group = new GroupData().withGroupName(name).withHeader(header).withFooter(footer);
         app.goTo().groupPage();
         //int before = app.group().count();
-        Groups before = app.group().all();
+        Groups before = app.db().groups();//app.group().all();
         app.group().create(group);
         app.goTo().groupPage();
         assertThat(app.group().count(),equalTo(before.size()+1));
 
-        Groups after = app.group().all();
+        Groups after = app.db().groups();//app.group().all();
         //int after = app.group().count();
         //Assert.assertEquals(after.size(), before.size() + 1);
         //assertThat(after.size(),equalTo(before.size()+1));

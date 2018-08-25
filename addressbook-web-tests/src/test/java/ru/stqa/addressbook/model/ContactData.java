@@ -48,15 +48,6 @@ public class ContactData {
   @Type(type="text")
   private String photo;
 
-  public File getPhoto() {
-    return new File(photo);
-  }
-
-  public ContactData withPhoto(File photo) {
-    this.photo = photo.getPath();
-    return this;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -64,12 +55,28 @@ public class ContactData {
     ContactData that = (ContactData) o;
     return id == that.id &&
             Objects.equals(name, that.name) &&
-            Objects.equals(surname, that.surname);
+            Objects.equals(surname, that.surname) &&
+            Objects.equals(nick, that.nick) &&
+            Objects.equals(mobilePhone, that.mobilePhone) &&
+            Objects.equals(email, that.email) &&
+            Objects.equals(homePhone, that.homePhone) &&
+            Objects.equals(workPhone, that.workPhone) &&
+            Objects.equals(group, that.group) &&
+            Objects.equals(address, that.address);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, surname, id);
+    return Objects.hash(name, surname, nick, mobilePhone, email, homePhone, workPhone, id, group, address);
+  }
+
+  public File getPhoto() {
+    return new File(photo);
+  }
+
+  public ContactData withPhoto(File photo) {
+    this.photo = photo.getPath();
+    return this;
   }
 
   @Override

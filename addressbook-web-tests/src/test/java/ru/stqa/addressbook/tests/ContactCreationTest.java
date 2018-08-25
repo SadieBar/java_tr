@@ -42,13 +42,13 @@ public class ContactCreationTest extends TestBase {
         //app.getContactHelper().fillContactForm(new ContactData("Ivan", "Ivanov", "ii", "+79151111111", "iivanov@mail.ru"));
         //app.getContactHelper().submitContact();
         //int before = app.getContactHelper().getContactCount();
-        Contacts before = app.getContactHelper().all();
+        Contacts before = app.db().contacts();//app.getContactHelper().all();
         //File photofile = new File("addressbook-web-tests/src/test/resources/stru.png");
         //ContactData contact = new ContactData()
         //        .withName("Ivan").withSurname("Ivanov").withNick("ii")
         //        .withMobilePhone("+79151111111").withWorkPhone("222").withHomePhone("111").withEmail("iivanov@mail.ru").withAddress("abc123").withPhoto(photofile);
         app.getContactHelper().createContact(contact);
-        Contacts after = app.getContactHelper().all();
+        Contacts after = app.db().contacts();//app.getContactHelper().all();
         //int after = app.getContactHelper().getContactCount();
         assertEquals(after.size(), before.size() + 1);
 
