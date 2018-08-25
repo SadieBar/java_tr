@@ -3,6 +3,7 @@ package ru.stqa.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import ru.stqa.addressbook.model.ContactData;
 import ru.stqa.addressbook.model.Contacts;
 
@@ -84,15 +85,35 @@ public class ContactHelper extends BaseHelper {
     data.click();
   }
 
+  public String getCurrentGroup() {
+    WebElement data = wd.findElement(By.xpath("//select[@name=\"to_group\"]"));
+    List<WebElement> elms = data.findElements(By.xpath("./option"));
+    return elms.get(0).getText();
+  }
+
   public void clickDelete() {
     clickByLocator(By.xpath("//input[@value=\"Delete\"]"));
     acceptAlert();
+  }
+
+  public void clickAddToGroup() {
+    clickByLocator(By.xpath("//input[@name=\"add\"]"));
   }
 
   public void createContact(ContactData data) {
     gotoAddNewContact();
     fillContactForm(data);
     submitContact();
+  }
+
+  public void selectGroup(String name) {
+    Select elm = new Select(wd.findElement(By.xpath("//select[@name=\"group\"]")));
+    elm.selectByVisibleText(name);
+  }
+
+  public void removeFromGroup() {
+    WebElement elm = wd.findElement(By.xpath("//input[@name='remove']"));
+    elm.click();
   }
 
   public boolean isContactPresent() {

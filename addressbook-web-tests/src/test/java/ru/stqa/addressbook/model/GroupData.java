@@ -9,7 +9,10 @@ import org.hibernate.annotations.Type;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @XStreamAlias("group")
 @Entity
@@ -30,6 +33,13 @@ public class GroupData {
   @Id
   @Column(name="group_id")
   private int id = Integer.MAX_VALUE;
+
+  @ManyToMany(mappedBy = "groups")
+  private Set<ContactData> contacts = new HashSet<ContactData>();
+
+  public Contacts getContacts() {
+    return new Contacts(contacts);
+  }
 
   @Override
   public boolean equals(Object o) {

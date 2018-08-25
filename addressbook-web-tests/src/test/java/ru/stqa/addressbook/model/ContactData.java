@@ -4,12 +4,11 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.io.File;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @XStreamAlias("contact")
 @Entity
@@ -37,8 +36,7 @@ public class ContactData {
   @Id
   @Column(name="id")
   private int id;
-  @Transient
-  private String group;
+
   @Transient
   private String allphones;
   @Column(name="address")
@@ -47,6 +45,14 @@ public class ContactData {
   @Column(name="photo")
   @Type(type="text")
   private String photo;
+
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(name = "address_in_groups", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
+  private Set<GroupData> groups = new HashSet<GroupData>();
+
+  public Groups getGroups() {
+    return new Groups(groups);
+  }
 
   @Override
   public boolean equals(Object o) {
@@ -61,13 +67,12 @@ public class ContactData {
             Objects.equals(email, that.email) &&
             Objects.equals(homePhone, that.homePhone) &&
             Objects.equals(workPhone, that.workPhone) &&
-            Objects.equals(group, that.group) &&
             Objects.equals(address, that.address);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, surname, nick, mobilePhone, email, homePhone, workPhone, id, group, address);
+    return Objects.hash(name, surname, nick, mobilePhone, email, homePhone, workPhone, id, address);
   }
 
   public File getPhoto() {
