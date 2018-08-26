@@ -15,9 +15,11 @@ import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
   private Properties properties;
-  WebDriver wd;
+  private WebDriver wd;
 
   private String browser;
+  private RegistrationHelper registrationHelper;
+  private FtpHelper ftoHelper;
 
 
   public ApplicationManager(String browser) {
@@ -31,23 +33,14 @@ public class ApplicationManager {
     String target = System.getProperty("target", "local");
     properties.load(new FileReader(new File(String.format("mantistests/src/test/resources/%s.properties", target))));
 
-    if (browser.equals(BrowserType.FIREFOX)) {
-      wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true));
-    } else if (browser.equals(BrowserType.CHROME)) {
-      System.setProperty(properties.getProperty("chrome.name"),properties.getProperty("chrome.path"));
-      wd = new ChromeDriver();
-    } else if (browser.equals(BrowserType.IE)) {
-      wd = new InternetExplorerDriver();
-    }
-    wd.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-    wd.get(properties.getProperty("web.baseUrl"));
 
   }
 
 
 
   public void stop() {
-    wd.quit();
+    if (wd != null)
+      wd.quit();
   }
 
   public HttpSession newSession() {
@@ -56,5 +49,34 @@ public class ApplicationManager {
 
   public String getProperty(String key) {
     return properties.getProperty(key);
+  }
+
+  public RegistrationHelper registration() {
+    if (registrationHelper == null)
+      registrationHelper = new RegistrationHelper(this);
+    return registrationHelper;
+  }
+
+  public FtpHelper ftp() {
+    if (ftoHelper==null)
+      ftoHelper = new FtpHelper(this);
+    return ftoHelper;
+  }
+
+  public WebDriver getDriver() {
+    if (wd == null) {
+      if (browser.equals(BrowserType.FIREFOX)) {
+        wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true));
+      } else if (browser.equals(BrowserType.CHROME)) {
+        System.setProperty(properties.getProperty("chrome.name"),properties.getProperty("chrome.path"));
+        wd = new ChromeDriver();
+      } else if (browser.equals(BrowserType.IE)) {
+        wd = new InternetExplorerDriver();
+      }
+      wd.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+      wd.get(properties.getProperty("web.baseUrl"));
+
+    }
+    return wd;
   }
 }
