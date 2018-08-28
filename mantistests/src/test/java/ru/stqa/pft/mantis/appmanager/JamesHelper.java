@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -115,6 +116,7 @@ public class JamesHelper {
     store.close();
   }
   private Folder openInbox(String username, String password) throws MessagingException {
+    mailserver = app.getProperty("mailserver.host");
     store = mailSession.getStore("pop3");
     store.connect(mailserver, username, password);
     Folder folder = store.getDefaultFolder().getFolder("INBOX");
@@ -125,14 +127,14 @@ public class JamesHelper {
   public List<MailMessage> waitForMail(String username, String password, long timeout) throws MessagingException {
     long now = System.currentTimeMillis();
     while (System.currentTimeMillis() < now + timeout) {
-      List<MailMessage> allMail = getAllMail(username, password);
-      if (allMail.size() > 0) {
-        return allMail;
-      }
       try {
         Thread.sleep(1000);
       } catch (InterruptedException e) {
         e.printStackTrace();
+      }
+      List<MailMessage> allMail = getAllMail(username, password);
+      if (allMail.size() > 0) {
+        return allMail;
       }
     }
     throw new Error("No mail :(");
@@ -147,7 +149,7 @@ public class JamesHelper {
 
   public static MailMessage toModelMail(Message m) {
     try {
-      return new MailMessage(m.getAllRecipients()[0].toString(), (String) m.getContent());
+      return new MailMessage(m.getAllRecipients()[0].toString(), (String) m.getContent(), new Date(m.getSentDate().getTime()));
     } catch (MessagingException e) {
       e.printStackTrace();
       return null;
