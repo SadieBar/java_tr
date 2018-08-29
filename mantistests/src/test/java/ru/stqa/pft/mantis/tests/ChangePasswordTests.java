@@ -15,17 +15,21 @@ public class ChangePasswordTests extends TestBase {
   @Test
   public void changePassword() throws IOException, MessagingException {
 
-    String email = "user1535481726385@localhost";
+    String email = "user1535483269767@localhost";
     String username = "user1535481726385";String password = "password";
+    List<MailMessage> mailMessagesBefore = app.james().waitForMail(username,password,60000);
 
     app.changepass().start("administrator","root");
     app.changepass().clickUsersManage();
     app.changepass().clickUser(username);
     app.changepass().resetPassword();
-    List<MailMessage> mailMessages = app.james().waitForMail(username,password,60000);
+    List<MailMessage> mailMessagesAfter;
+    do {
+      mailMessagesAfter = app.james().waitForMail(username, password, 60000);
+    } while (mailMessagesBefore.size()==mailMessagesAfter.size());
     //MailMessage latestMessage = mailMessages.get(mailMessages.size()-1);
     //List<MailMessage> newList = new ArrayList<>(); newList.add(latestMessage);
-    String passchangeLink = app.changepass().findChangePasswordLink(mailMessages, email);
+    String passchangeLink = app.changepass().findChangePasswordLink(mailMessagesAfter, email);
     String newPassword = "password1";
     app.changepass().finish(passchangeLink,newPassword);
 
