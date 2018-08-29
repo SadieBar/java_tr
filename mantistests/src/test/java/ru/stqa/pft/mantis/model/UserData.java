@@ -11,10 +11,8 @@ import javax.persistence.Id;
 public class UserData {
   @Id
   @Column(name="username")
-  @Type(type = "text")
   private String user;
   @Column(name="email")
-  @Type(type = "text")
   private String email;
 
   public void setEmail(String email) {
