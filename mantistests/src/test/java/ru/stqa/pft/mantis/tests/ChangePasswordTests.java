@@ -22,7 +22,7 @@ public class ChangePasswordTests extends TestBase {
     int index = 0;
     do{
       index = (int) new Random().nextInt(users.size());
-    } while (users.get(index).getUser()=="administrator");
+    } while (users.get(index).getUser().equals("administrator"));
     String email = users.get(index).getEmail();//"user1535483269767@localhost";
     String username = users.get(index).getUser();//"user1535481726385";
     String password = "password";
