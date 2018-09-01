@@ -26,7 +26,7 @@ public class RestTests {
     assertEquals(newIssues, oldIssues);
   }
   private Set<Issue> getIssues() throws IOException {
-    String json = getExecutorAPI().execute(Request.Get("http://bugify.stqa.ru/api/issues.json")).returnContent().asString();
+    String json = getExecutorAPI().execute(Request.Get("http://bugify.stqa.ru/api/issues.json?limit=1000")).returnContent().asString();
     JsonElement parsed = new JsonParser().parse(json);
     JsonElement issues = parsed.getAsJsonObject().get("issues");
     return new Gson().fromJson(issues, new TypeToken<Set<Issue>>(){}.getType());
