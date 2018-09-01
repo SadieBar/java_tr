@@ -1,14 +1,18 @@
 package ru.stqa.pft.mantis.tests;
 
 import org.openqa.selenium.remote.BrowserType;
+import org.testng.SkipException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import ru.stqa.pft.mantis.appmanager.ApplicationManager;
 
+import javax.xml.rpc.ServiceException;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.rmi.RemoteException;
 
 
 public class TestBase {
@@ -25,6 +29,15 @@ public class TestBase {
     app.ftp().restore("config_inc.php.bak","config_inc.php");
     app.stop();
   }
-
-
+  public boolean isIssueOpen(int issueId) throws RemoteException, ServiceException, MalformedURLException {
+    String issueResolution = app.soap().getIssue(issueId);
+    boolean isIssueOpen = false;
+    if (issueResolution.equals("open")) isIssueOpen = true;
+    return isIssueOpen;
+  }
+  public void skipIfNotFixed(int issueId) throws RemoteException, ServiceException, MalformedURLException {
+    if (isIssueOpen(issueId)) {
+      throw new SkipException("Ignored because of issue " + issueId);
+    }
+  }
 }
