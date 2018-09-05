@@ -26,6 +26,12 @@ public class ContactData {
   @Column(name="email")
   @Type(type="text")
   private String email;
+  @Column(name="email2")
+  @Type(type="text")
+  private String email2;
+  @Column(name="email3")
+  @Type(type="text")
+  private String email3;
   @Column(name="home")
   @Type(type="text")
   private String homePhone;
@@ -36,9 +42,12 @@ public class ContactData {
   @Id
   @Column(name="id")
   private int id;
-
+  @Transient
+  private String emails;
   @Transient
   private String allphones;
+  @Transient
+  private String allemails;
   @Column(name="address")
   @Type(type="text")
   private String address;
@@ -65,6 +74,8 @@ public class ContactData {
             Objects.equals(nick, that.nick) &&
             Objects.equals(mobilePhone, that.mobilePhone) &&
             Objects.equals(email, that.email) &&
+            Objects.equals(email2, that.email2) &&
+            Objects.equals(email3, that.email3) &&
             Objects.equals(homePhone, that.homePhone) &&
             Objects.equals(workPhone, that.workPhone) &&
             Objects.equals(address, that.address);
@@ -119,6 +130,12 @@ public class ContactData {
     return name;
   }
 
+
+
+  public String getEmails() {
+    return emails;
+  }
+
   public String getSurname() {
     return surname;
   }
@@ -133,6 +150,14 @@ public class ContactData {
 
   public String getEmail() {
     return email;
+  }
+
+  public String getEmail2() {
+    return email2;
+  }
+
+    public String getEmail3() {
+      return email3;
   }
 
   public int getId() { return id;}
@@ -188,6 +213,19 @@ public class ContactData {
     this.email = email;
     return this;
   }
+  public ContactData withEmail2(String email2) {
+    this.email2 = email2;
+    return this;
+  }
+  public ContactData withEmail3(String email3) {
+    this.email3 = email3;
+    return this;
+  }
+
+  public ContactData withEmails(String emails) {
+    this.emails = emails;
+    return this;
+  }
 
   public ContactData withId(int id) {
     this.id = id;
@@ -202,4 +240,5 @@ public class ContactData {
     this.allphones = allphones;
     return this;
   }
+
 }

@@ -4,7 +4,9 @@ import org.testng.annotations.Test;
 import ru.stqa.addressbook.model.ContactData;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -16,13 +18,16 @@ public class ContactComparisonTests extends TestBase {
     if (!app.getContactHelper().isContactPresent()) {
       app.getContactHelper().createContact(new ContactData().withName("Ivan")
               .withSurname("Ivanov").withNick("ii").withMobilePhone("+79151111111")
-              .withEmail("iivanov@mail.ru").withAddress("abc123").withWorkPhone("111").withHomePhone("222"));
+              .withEmail("iivanov@mail.ru").withEmail2("iivanov2@mail.ru").withEmail3("iivanov2@mail.ru")
+              .withAddress("abc123").withWorkPhone("111").withHomePhone("222")
+      .withEmail2("iviv@mail.ru").withEmail3("ii@mail.ru"));
+
     }
     ContactData contact = app.getContactHelper().all().iterator().next();
     ContactData contactInfoFromEditForm = app.getContactHelper().infoFromEditForm(contact);
     //сверка
+    assertThat(contact.getEmails(), equalTo(mergeEmails(contactInfoFromEditForm)));
     assertThat(contact.getAllphones(), equalTo(mergePhones(contactInfoFromEditForm)));
-    assertThat(contact.getEmail(), equalTo(contactInfoFromEditForm.getEmail()));
     assertThat(contact.getAddress(), equalTo(contactInfoFromEditForm.getAddress()));
 
   }
@@ -32,6 +37,12 @@ public class ContactComparisonTests extends TestBase {
             .stream().filter((s) -> ! s.equals(""))
             .map(ContactComparisonTests::cleaned)
             .collect(Collectors.joining("\n"));
+  }
+  private String mergeEmails(ContactData contact){
+    return Arrays.asList(contact.getEmail(),contact.getEmail2(),contact.getEmail3())
+            .stream().filter((s) -> ! s.equals(""))
+            .collect(Collectors.joining("\n"));
+
   }
 
   public static String cleaned(String phone) {
