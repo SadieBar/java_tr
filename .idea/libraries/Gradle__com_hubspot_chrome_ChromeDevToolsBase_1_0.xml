@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.hubspot.chrome:ChromeDevToolsBase:1.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.hubspot.chrome/ChromeDevToolsBase/1.0/750f45212946edc69b350db1a3f75a33db6d4513/ChromeDevToolsBase-1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.hubspot.chrome/ChromeDevToolsBase/1.0/50bf357077f6cbf5549fb886ac9baa8bd14b4c21/ChromeDevToolsBase-1.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

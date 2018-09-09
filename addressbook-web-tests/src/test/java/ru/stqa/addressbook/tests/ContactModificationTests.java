@@ -1,5 +1,6 @@
 package ru.stqa.addressbook.tests;
 
+import org.apache.commons.logging.LogSource;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.addressbook.model.ContactData;
@@ -17,8 +18,11 @@ public class ContactModificationTests extends TestBase {
     if (app.db().contacts().size()==0){
       app.getContactHelper().createContact(new ContactData().withName("Ivan")
               .withSurname("Ivanov").withNick("ii").withMobilePhone("+79151111111")
-              .withEmail("iivanov@mail.ru").withAddress("abc123").withWorkPhone("111").withHomePhone("222"));
+              .withEmail("iivanov@mail.ru").withAddress("abc123").withWorkPhone("111").withHomePhone("222")
+              .withEmail2("pp.email@mail.ru").withEmail3("test@mail.ri"))
+              ;
     }
+
     //int before = app.getContactHelper().getContactCount();
     Contacts before = app.db().contacts();//app.getContactHelper().all();
     ContactData modifiedData = before.iterator().next();
@@ -26,8 +30,10 @@ public class ContactModificationTests extends TestBase {
     app.getContactHelper().clickEditById(modifiedData);
     ContactData newdata = new ContactData().withName("Peter")
             .withSurname("Petrov").withNick("pp").withMobilePhone("+79152222222")
-            .withEmail("ppetrov@mail.ru").withWorkPhone("123").withHomePhone("321").withAddress("abc321").withPhoto(new File("addressbook-web-tests\\src\\test\\resources\\stru.png"));
-    app.getContactHelper().fillContactForm(newdata);
+            .withEmail("ppetrov@mail.ru").withWorkPhone("123").withHomePhone("321").withAddress("abc321").withPhoto(new File("addressbook-web-tests\\src\\test\\resources\\stru.png"))
+            .withEmail2("pp@gmail.com").withEmail3("peter@gmail.com");
+
+            app.getContactHelper().fillContactForm(newdata);
     app.getContactHelper().clickUpdate();
     //int after = app.getContactHelper().getContactCount();
     Contacts after = app.db().contacts();// app.getContactHelper().all();

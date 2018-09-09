@@ -22,25 +22,26 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TestBase {
   Logger logger = LoggerFactory.getLogger(TestBase.class);
-  protected static final ApplicationManager app = new ApplicationManager(System.getProperty("browser",BrowserType.CHROME));
+  protected static final ApplicationManager app = new ApplicationManager(System.getProperty("browser", BrowserType.CHROME));
 
   @BeforeSuite
   public void setUp() throws Exception {
     app.init();
   }
 
-  @AfterSuite(alwaysRun=true)
+  @AfterSuite(alwaysRun = true)
   public void tearDown() {
     app.stop();
   }
 
   @BeforeMethod(alwaysRun = true)
   public void logTestStart(Method m, Object[] p) {
-    logger.info("Start test "+m.getName()+" with pars "+ Arrays.asList(p));
+    logger.info("Start test " + m.getName() + " with pars " + Arrays.asList(p));
   }
-  @AfterMethod(alwaysRun=true)
+
+  @AfterMethod(alwaysRun = true)
   public void logTestStop(Method m) {
-    logger.info("Stop test "+m.getName());
+    logger.info("Stop test " + m.getName());
   }
 
   public void verifyGroupListinUI() {
@@ -52,4 +53,5 @@ public class TestBase {
               .collect(Collectors.toSet())));
     }
   }
+
 }

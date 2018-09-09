@@ -16,4 +16,5 @@ public class SessionHelper extends BaseHelper {
     type(By.name("pass"),password);
     clickByLocator(By.xpath("//form[@id='LoginForm']/input[3]"));
   }
+
 }

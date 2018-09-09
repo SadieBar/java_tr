@@ -46,13 +46,13 @@ public class ContactData {
   private String emails;
   @Transient
   private String allphones;
-  @Transient
-  private String allemails;
+
   @Column(name="address")
   @Type(type="text")
   private String address;
   @Column(name="photo")
   @Type(type="text")
+  @Transient
   private String photo;
 
   @ManyToMany(fetch = FetchType.EAGER)
@@ -86,6 +86,7 @@ public class ContactData {
     return Objects.hash(name, surname, nick, mobilePhone, email, homePhone, workPhone, id, address);
   }
 
+  @Transient
   public File getPhoto() {
     return new File(photo);
   }
@@ -103,6 +104,8 @@ public class ContactData {
             ", nick='" + nick + '\'' +
             ", mobilePhone='" + mobilePhone + '\'' +
             ", email='" + email + '\'' +
+            ", email2='" + email2+ '\'' +
+            ", email3='" + email3 + '\'' +
             ", id=" + id +
             '}';
   }
@@ -222,7 +225,7 @@ public class ContactData {
     return this;
   }
 
-  public ContactData withEmails(String emails) {
+  public ContactData withAllEmails(String emails) {
     this.emails = emails;
     return this;
   }
@@ -232,8 +235,8 @@ public class ContactData {
     return this;
   }
 
-  public String getAllphones() {
-    return allphones;
+  public String getAllphones(){
+  return allphones;
   }
 
   public ContactData withAllPhones(String allphones) {

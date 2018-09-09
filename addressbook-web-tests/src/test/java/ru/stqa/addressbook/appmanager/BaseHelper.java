@@ -34,6 +34,7 @@ public class BaseHelper {
     //window.getComputedStyle($('app-element /deep/ #filter-form /deep/ input#txtSearch'))
     clickByLocator(group_name_locator);
     wd.findElement(group_name_locator).clear();
+    String str = "1_";
     wd.findElement(group_name_locator).sendKeys(groupName);
   }
 

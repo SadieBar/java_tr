@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import ru.stqa.addressbook.model.ContactData;
 import ru.stqa.addressbook.model.Contacts;
 
@@ -11,7 +12,10 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static org.testng.Assert.assertEquals;
+
 public class ContactHelper extends BaseHelper {
+
 
   public ContactHelper(WebDriver wd) {
     super(wd);
@@ -19,13 +23,26 @@ public class ContactHelper extends BaseHelper {
 
   public void submitContact() {
     clickByLocator(By.name("theform"));
-    clickByLocator(By.xpath("//div[@id='content']/form/input[21]"));
+    clickByLocator(By.xpath("//input[@value=\"Enter\"]"));
   }
 
   public void gotoAddNewContact() {
     clickByLocator(By.cssSelector("html"));
     clickByLocator(By.linkText("add new"));
   }
+
+  /*private void contactBuild(ContactData contactData) {
+    assert (By.name("firstname"),contactData.getName());
+    assert (By.name("lastname"),contactData.getSurname());
+    assert (By.name("nickname"), contactData.getNick());
+    assert (By.name(""), contactData.getMobilePhone());
+    type(By.name("home"), contactData.getHomePhone());
+    type(By.name("work"), contactData.getWorkPhone());
+    type(By.name("email"), contactData.getEmail());
+    type(By.name("email2"), contactData.getEmail2());
+    type(By.name("email3"), contactData.getEmail3());
+    type(By.name("address"), contactData.getAddress());
+  }*/
 
   public String getAddress() {
     return wd.findElement(By.name("address")).getText();
@@ -48,8 +65,8 @@ public class ContactHelper extends BaseHelper {
   }
 
   public void fillContactForm(ContactData contactData) {
-    type(By.name("firstname"), contactData.getName());
-    type(By.name("lastname"), contactData.getSurname());
+    type(By.name("firstname"),contactData.getName());
+    type(By.name("lastname"),contactData.getSurname());
     type(By.name("nickname"), contactData.getNick());
     type(By.name("mobile"), contactData.getMobilePhone());
     type(By.name("home"), contactData.getHomePhone());
@@ -58,7 +75,7 @@ public class ContactHelper extends BaseHelper {
     type(By.name("email2"), contactData.getEmail2());
     type(By.name("email3"), contactData.getEmail3());
     type(By.name("address"), contactData.getAddress());
-    attach(By.name("photo"), contactData.getPhoto());
+    //attach(By.name("photo"), contactData.getPhoto());
   }
 
   public void clickEdit(int index) {
@@ -166,17 +183,18 @@ public class ContactHelper extends BaseHelper {
       int id = Integer.parseInt(cells.get(0).findElement(By.tagName("input")).getAttribute("value"));
       String firstname = cells.get(2).getText();
       String lastname = cells.get(1).getText();
-      String allphones = cells.get(5).getText();
+      String allPhones= cells.get(5).getText();
       String emails = cells.get(4).getText();
+      String address = cells.get(3).getText();
       //String[] phones = cells.get(5).getText().split("\n");
-      datas.add(new ContactData().withId(id).withName(firstname).withSurname(lastname)
-              .withAllPhones(allphones).withEmails(emails));
+      datas.add(new ContactData().withId(id).withName(firstname)
+              .withSurname(lastname).withAllEmails(emails).withAllPhones(allPhones));//.withAllPhones(allPhones.toString()).withAllEmails(emails.toString()));
     }
     /*for (int i = 0; i < elements.size() - 1; i++) {
       String path = "//tbody/tr[" + (i + 2) + "]";
       String surname = wd.findElement(By.xpath(path + "/td[2]")).getText();
       String name = wd.findElement(By.xpath(path + "/td[3]")).getText();
-      String ids = wd.findElement(By.xpath(path + "/td[7]/a")).getAttribute("href");
+
       String pattern = ".*id=(\\d+)";
       Pattern r = Pattern.compile(pattern);
       Matcher m = r.matcher(ids);
@@ -221,5 +239,30 @@ public class ContactHelper extends BaseHelper {
     //wd.findElement(By.xpath(String.format("//input[@value='#s']/../../td[8]/a",id))).click();
     //wd.findElement(By.xpath(String.format("//tr[.//input[@value='#s']]/td[8]/a",id))).click();
     //wd.findElement((By.cssSelector((String.format("a[href='edit.php?id=%s'",id))))).click();
+  }
+
+  public void verifyContact(ContactData contact) {
+    int id = -1; int index = -1; int i=0;
+    List<WebElement> rows = wd.findElements(By.name("entry"));
+
+    do {
+      id = Integer.parseInt(rows.get(i).findElement(By.tagName("input")).getAttribute("value"));
+      if (id==contact.getId()) {
+        index = i;
+        break;
+      }
+      i++;
+    } while (i<rows.size());
+    List<WebElement> cells = rows.get(index).findElements(By.tagName("td"));
+    String firstname = cells.get(2).getText();
+    String lastname = cells.get(1).getText();
+    String allPhones= cells.get(5).getText();
+    String emails = cells.get(4).getText();
+    String address = cells.get(3).getText();
+    assertEquals(firstname, contact.getName());
+    assertEquals(lastname, contact.getSurname());
+    assertEquals(allPhones,contact.getAllphones());
+    assertEquals(emails,contact.getEmails());
+    assertEquals(address,contact.getAddress());
   }
 }
