@@ -223,7 +223,7 @@ public class ContactHelper extends BaseHelper {
     String email3 = wd.findElement(By.name("email3")).getAttribute("value");
 
 
-    wd.navigate().back();
+    //wd.navigate().back();
     return new ContactData().withId(contact.getId()).withName(firstname)
             .withSurname(lastname).withMobilePhone(mobile)
             .withHomePhone(home).withWorkPhone(work)

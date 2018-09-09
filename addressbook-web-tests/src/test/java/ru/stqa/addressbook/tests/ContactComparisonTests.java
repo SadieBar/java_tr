@@ -25,7 +25,7 @@ public class ContactComparisonTests extends TestBase {
     }
     ContactData contact = app.getContactHelper().all().iterator().next();
     ContactData contactInfoFromEditForm = app.getContactHelper().infoFromEditForm(contact);
-    //сверка
+    //сверкаwith
     assertThat(contact.getEmails(), equalTo(mergeEmails(contactInfoFromEditForm)));
     assertThat(contact.getAllphones(), equalTo(mergePhones(contactInfoFromEditForm)));
     assertThat(contact.getAddress(), equalTo(contactInfoFromEditForm.getAddress()));

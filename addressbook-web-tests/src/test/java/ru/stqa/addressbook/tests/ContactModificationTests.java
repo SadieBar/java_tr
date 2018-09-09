@@ -30,7 +30,8 @@ public class ContactModificationTests extends TestBase {
     app.getContactHelper().clickEditById(modifiedData);
     ContactData newdata = new ContactData().withName("Peter")
             .withSurname("Petrov").withNick("pp").withMobilePhone("+79152222222")
-            .withEmail("ppetrov@mail.ru").withWorkPhone("123").withHomePhone("321").withAddress("abc321").withPhoto(new File("addressbook-web-tests\\src\\test\\resources\\stru.png"))
+            .withEmail("ppetrov@mail.ru").withWorkPhone("123").withHomePhone("321").withAddress("abc321")
+            //.withPhoto(new File("addressbook-web-tests\\src\\test\\resources\\stru.png"))
             .withEmail2("pp@gmail.com").withEmail3("peter@gmail.com");
 
             app.getContactHelper().fillContactForm(newdata);

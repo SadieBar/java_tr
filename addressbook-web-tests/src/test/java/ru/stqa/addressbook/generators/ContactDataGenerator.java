@@ -61,7 +61,7 @@ public class ContactDataGenerator {
               .withWorkPhone(String.format("915 %s" ,i))
               .withEmail(String.format("%s@mail.ru" ,i))
               .withNick(String.format("nick%s" ,i))
-              .withPhoto(new File("addressbook-web-tests/src/test/resources/stru.png"))
+              //.withPhoto(new File("addressbook-web-tests/src/test/resources/stru.png"))
               .withAddress(String.format("City %s" ,i))
       );
     }

@@ -50,10 +50,10 @@ public class ContactData {
   @Column(name="address")
   @Type(type="text")
   private String address;
-  @Column(name="photo")
-  @Type(type="text")
-  @Transient
-  private String photo;
+  //@Column(name="photo")
+  //@Type(type="text")
+  //@Transient
+  //private String photo;
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "address_in_groups", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
@@ -87,14 +87,14 @@ public class ContactData {
   }
 
   @Transient
-  public File getPhoto() {
-    return new File(photo);
-  }
+  //public File getPhoto() {
+  //  return new File(photo);
+  //}
 
-  public ContactData withPhoto(File photo) {
-    this.photo = photo.getPath();
-    return this;
-  }
+  //public ContactData withPhoto(File photo) {
+   // this.photo = photo.getPath();
+   // return this;
+  //}
 
   @Override
   public String toString() {
