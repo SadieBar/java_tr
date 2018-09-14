@@ -15,6 +15,7 @@ public class ContactComparisonTests extends TestBase {
   @Test
   public void testComparison() {
     app.goTo().homePage();
+
     if (!app.getContactHelper().isContactPresent()) {
       app.getContactHelper().createContact(new ContactData().withName("Ivan")
               .withSurname("Ivanov").withNick("ii").withMobilePhone("+79151111111")
@@ -23,12 +24,12 @@ public class ContactComparisonTests extends TestBase {
       .withEmail2("iviv@mail.ru").withEmail3("ii@mail.ru"));
 
     }
-    ContactData contact = app.getContactHelper().all().iterator().next();
-    ContactData contactInfoFromEditForm = app.getContactHelper().infoFromEditForm(contact);
+    ContactData contactComplited = app.getContactHelper().all().iterator().next();
+    ContactData contactInfoFromEditForm = app.getContactHelper().infoFromEditForm(contactComplited);
     //сверкаwith
-    assertThat(contact.getEmails(), equalTo(mergeEmails(contactInfoFromEditForm)));
-    assertThat(contact.getAllphones(), equalTo(mergePhones(contactInfoFromEditForm)));
-    assertThat(contact.getAddress(), equalTo(contactInfoFromEditForm.getAddress()));
+    assertThat(contactComplited.getEmails(), equalTo(mergeEmails(contactInfoFromEditForm)));
+    assertThat(contactComplited.getAllphones(), equalTo(mergePhones(contactInfoFromEditForm)));
+    assertThat(contactComplited.getAddress(), equalTo(contactInfoFromEditForm.getAddress()));
 
   }
 
