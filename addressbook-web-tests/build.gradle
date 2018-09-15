@@ -16,3 +16,22 @@ dependencies {
     compile 'com.hubspot.chrome:ChromeDevToolsBase:1.0'
     compile 'edu.clemson.cs.resolve:git-plugin:0.0.1-alpha3'
 }
+
+//test {
+//    useTestNG();
+//}
+
+useTestNG(type: Test) {
+    useTestNG {
+        suites "src/test/resoures/testing-groupd.xml"
+    }
+    if (project.hasProperty ('browser')) {
+        systemProperty('browser',"${browser}")
+    }
+    if (project.hasProperty ('target')) {
+        systemProperty('target',"${target}")
+    }
+    if (project.hasProperty ("verifyUI")) {
+        systemProperty('verifyUI',"${verifyUI}")
+    }
+}
