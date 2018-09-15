@@ -10,9 +10,9 @@ import java.util.stream.Stream;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-
-public class ContactComparisonTests extends TestBase {
-  @Test
+Tests extends TestBase {
+@Test
+public class ContactComparison
   public void testComparison() {
     app.goTo().homePage();
 
