@@ -21,8 +21,7 @@ public class ContactComparisonTests extends TestBase {
               .withSurname("Ivanov").withNick("ii").withMobilePhone("+79151111111")
               .withEmail("iivanov@mail.ru").withEmail2("iivanov2@mail.ru").withEmail3("iivanov2@mail.ru")
               .withAddress("abc123").withWorkPhone("111").withHomePhone("222")
-      .withEmail2("iviv@mail.ru").withEmail3("ii@mail.ru"));
-
+              .withEmail2("iviv@mail.ru").withEmail3("ii@mail.ru"));
     }
     ContactData contactComplited = app.getContactHelper().all().iterator().next();
     ContactData contactInfoFromEditForm = app.getContactHelper().infoFromEditForm(contactComplited);
