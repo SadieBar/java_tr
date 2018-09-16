@@ -21,8 +21,8 @@ dependencies {
     compile 'edu.clemson.cs.resolve:git-plugin:0.0.1-alpha3'
 
 }
-mainClassName = ‘ContactComparisonTests.java’
-apply plugin: `application`
+//mainClassName = 'ContactComparisonTests.java'
+
 //test {
 //    useTestNG();
 //}
@@ -42,3 +42,5 @@ apply plugin: `application`
     if (project.hasProperty ("verifyUI")) {
         systemProperty('verifyUI',"${verifyUI}")
     }}
+
+apply plugin: "application"

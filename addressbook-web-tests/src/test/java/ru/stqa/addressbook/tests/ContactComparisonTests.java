@@ -13,9 +13,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactComparisonTests extends TestBase {
 
- // public static void main (String []args) {
-  //  testComparison();
- //}
+
+  public static void mainFlow (String args[]) {
+    testComparison();
+ }
   @Test
   public void testComparison() {
     app.goTo().homePage();
