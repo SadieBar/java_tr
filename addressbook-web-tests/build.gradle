@@ -1,3 +1,7 @@
+import jdk.internal.dynalink.linker.ConversionComparator
+
+import static jdk.nashorn.internal.objects.NativeRegExp.test
+
 apply plugin: 'java'
 
 repositories {
@@ -15,23 +19,30 @@ dependencies {
     compile 'org.hibernate:hibernate-agroal:5.3.5.Final'
     compile 'com.hubspot.chrome:ChromeDevToolsBase:1.0'
     compile 'edu.clemson.cs.resolve:git-plugin:0.0.1-alpha3'
+
 }
+//mainClassName = 'ContactComparisonTests.java'
 
 //test {
 //    useTestNG();
 //}
 
-useTestNG(type: Test) {
-    useTestNG {
-        suites "src/test/resoures/testing-groupd.xml"
+
+    task test (type: Test) {
+        useTestNG {
+            //suites ContactComparisonTests.java
+            suites "src/test/resoures/contacts.xml"
+        }
+
+        if (project.hasProperty('browser')) {
+            systemProperty('browser', "${browser}")
+        }
+        if (project.hasProperty('target')) {
+            systemProperty('target', "${target}")
+        }
+        if (project.hasProperty("verifyUI")) {
+            systemProperty('verifyUI', "${verifyUI}")
+        }
     }
-    if (project.hasProperty ('browser')) {
-        systemProperty('browser',"${browser}")
-    }
-    if (project.hasProperty ('target')) {
-        systemProperty('target',"${target}")
-    }
-    if (project.hasProperty ("verifyUI")) {
-        systemProperty('verifyUI',"${verifyUI}")
-    }
-}
+
+apply plugin: "application"

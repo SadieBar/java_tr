@@ -37,6 +37,7 @@
     <!-- Names the annotated entity class -->
     <mapping class="ru.stqa.addressbook.model.GroupData"/>
     <mapping class="ru.stqa.addressbook.model.ContactData"/>
+    <mapping class="ru.stqs.addressbook.tests.ContactComparisonTests">
 
 </session-factory>
 

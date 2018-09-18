@@ -10,19 +10,27 @@ import java.util.stream.Stream;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-Tests extends TestBase {
-@Test
-public class ContactComparison
+
+public class ContactComparisonTests extends TestBase {
+
+
+  public static void mainFlow (String args[]) {
+    testComparison();
+ }
+  @Test
   public void testComparison() {
     app.goTo().homePage();
 
-    if (!app.getContactHelper().isContactPresent()) {
+    if ("".equals(properties.getProperty("selenium.server")))
+      if (!app.getContactHelper().isContactPresent()) {
       app.getContactHelper().createContact(new ContactData().withName("Ivan")
               .withSurname("Ivanov").withNick("ii").withMobilePhone("+79151111111")
               .withEmail("iivanov@mail.ru").withEmail2("iivanov2@mail.ru").withEmail3("iivanov2@mail.ru")
               .withAddress("abc123").withWorkPhone("111").withHomePhone("222")
               .withEmail2("iviv@mail.ru").withEmail3("ii@mail.ru"));
     }
+    properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
+
     ContactData contactComplited = app.getContactHelper().all().iterator().next();
     ContactData contactInfoFromEditForm = app.getContactHelper().infoFromEditForm(contactComplited);
     //сверкаwith
