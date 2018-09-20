@@ -32,10 +32,9 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import ru.stqa.addressbook.model.ContactData;
+import org.testng.annotations.AfterSuite;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
@@ -51,14 +50,11 @@ public class ApplicationManager {
   private ContactHelper contactHelper;
   private String browser;
   private DbHelper dbHelper;
+  public ApplicationManager app;
 
   public ApplicationManager(String browser) {
     this.browser = browser;
     properties = new Properties();
-  }
-  @AfterSuite(alwaysRun = false)
-  public void tearDown() {
-    app.stop();
   }
 
   public void init() throws IOException {
@@ -91,11 +87,15 @@ public class ApplicationManager {
   }
 
 
-
+@AfterSuite
   public void stop() {
     wd.quit();
   }
 
+  /*@AfterSuite(alwaysRun = false)
+  public void tearDown() {
+    app.stop();
+  }*/
 
   public GroupHelper group() {
     return groupHelper;
@@ -109,6 +109,14 @@ public class ApplicationManager {
 
   public DbHelper db() {
     return dbHelper;
+  }
+
+  public HttpSession newSession() {
+      return (new HttpSession(this));
+  }
+  public String getProperty(String data) {
+    return System.getProperty(data);
+
   }
 }
 

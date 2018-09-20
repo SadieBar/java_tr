@@ -3,6 +3,10 @@ package ru.stqa.addressbook.tests;
 import org.testng.annotations.Test;
 import ru.stqa.addressbook.model.ContactData;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,14 +18,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ContactComparisonTests extends TestBase {
 
 
-  public static void mainFlow (String args[]) {
-    testComparison();
+  public static void mainFlow (String args[]) throws IOException {
+    new ContactComparisonTests().testComparison();
  }
   @Test
-  public void testComparison() {
+  public void testComparison() throws IOException {
     app.goTo().homePage();
 
-    if ("".equals(properties.getProperty("selenium.server")))
+    if ("".equals(System.getProperties().getProperty("selenium.server")))
       if (!app.getContactHelper().isContactPresent()) {
       app.getContactHelper().createContact(new ContactData().withName("Ivan")
               .withSurname("Ivanov").withNick("ii").withMobilePhone("+79151111111")
@@ -29,7 +33,8 @@ public class ContactComparisonTests extends TestBase {
               .withAddress("abc123").withWorkPhone("111").withHomePhone("222")
               .withEmail2("iviv@mail.ru").withEmail3("ii@mail.ru"));
     }
-    properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
+    String target = System.getProperty("remote", "local");
+    System.getProperties().load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
 
     ContactData contactComplited = app.getContactHelper().all().iterator().next();
     ContactData contactInfoFromEditForm = app.getContactHelper().infoFromEditForm(contactComplited);

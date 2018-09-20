@@ -1,48 +1,59 @@
-import jdk.internal.dynalink.linker.ConversionComparator
-
-import static jdk.nashorn.internal.objects.NativeRegExp.test
 
 apply plugin: 'java'
 
 repositories {
     mavenCentral()
 }
+
+test {
+    useTestNG()
+}
+
 dependencies {
     compile 'org.testng:testng:6.14.3'
     compile 'org.seleniumhq.selenium:selenium-java:3.13.0'
     compile 'org.hamcrest:java-hamcrest:2.0.0.0'
+    compile 'com.beust:jcommander:1.72'
     compile 'com.thoughtworks.xstream:xstream:1.4.10'
     compile 'com.google.code.gson:gson:2.8.5'
-    compile 'com.beust:jcommander:1.72'
-    compile 'ch.qos.logback:logback-classic:1.2.3'
-    compile 'mysql:mysql-connector-java:8.0.12'
-    compile 'org.hibernate:hibernate-agroal:5.3.5.Final'
-    compile 'com.hubspot.chrome:ChromeDevToolsBase:1.0'
-    compile 'edu.clemson.cs.resolve:git-plugin:0.0.1-alpha3'
-
+    compile 'ch.qos.logback:logback-classic:1.1.5'
+    compile 'mysql:mysql-connector-java:5.1.41'
+    compile 'org.hibernate:hibernate-core:5.1.0.Final'
 }
-//mainClassName = 'ContactComparisonTests.java'
 
-//test {
-//    useTestNG();
-//}
-
-
-    task test (type: Test) {
-        useTestNG {
-            //suites ContactComparisonTests.java
-            suites "src/test/resoures/contacts.xml"
-        }
-
-        if (project.hasProperty('browser')) {
-            systemProperty('browser', "${browser}")
-        }
-        if (project.hasProperty('target')) {
-            systemProperty('target', "${target}")
-        }
-        if (project.hasProperty("verifyUI")) {
-            systemProperty('verifyUI', "${verifyUI}")
-        }
+task testGroups(type: Test) {
+    useTestNG {
+        suites 'src/test/resources/testng-groups.xml'
+    }
+    if(project.hasProperty('browser')) {
+        systemProperty('browser', "${browser}")
+    }
+    if(project.hasProperty('platform')) {
+        systemProperty('platform', "${platform}")
+    }
+    if(project.hasProperty('target')) {
+        systemProperty('target', "${target}")
+    }
+    if(project.hasProperty('verifyUi')) {
+        systemProperty('verifyUi', "${verifyUi}")
     }
 
-apply plugin: "application"
+}
+
+task testContacts(type: Test) {
+    useTestNG {
+        suites 'src/test/resources/testng-contacts.xml'
+    }
+    if(project.hasProperty('browser')) {
+        systemProperty('browser', "${browser}")
+    }
+    if(project.hasProperty('platform')) {
+        systemProperty('platform', "${platform}")
+    }
+    if(project.hasProperty('target')) {
+        systemProperty('target', "${target}")
+    }
+    if(project.hasProperty('verifyUi')) {
+        systemProperty('verifyUi', "${verifyUi}")
+    }
+}
