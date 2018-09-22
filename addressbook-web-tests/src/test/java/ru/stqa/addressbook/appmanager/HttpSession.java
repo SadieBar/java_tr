@@ -19,7 +19,7 @@ public class HttpSession {
   private ApplicationManager app;
   public HttpSession(ApplicationManager app) {
     this.app = app;
-    httpclient = HttpClients.custom().setRedirectStrategy(new LaxRedirectionary().build());
+    httpclient = HttpClients.custom().setRedirectStrategy();//(new LaxRedirectionary().build());
   }
   public boolean login(String username,String password) throws IOException {
     HttpPost post = new HttpPost(app.getProperty("web.baseUrl" + "/login.php"));
