@@ -19,7 +19,7 @@ public class HttpSession {
   private ApplicationManager app;
   public HttpSession(ApplicationManager app) {
     this.app = app;
-    httpclient = HttpClients.custom().setRedirectStrategy(new LaxxRedirectionary().build();
+    httpclient = HttpClients.custom().setRedirectStrategy(new LaxRedirectionary().build());
   }
   public boolean login(String username,String password) throws IOException {
     HttpPost post = new HttpPost(app.getProperty("web.baseUrl" + "/login.php"));
@@ -47,6 +47,6 @@ public class HttpSession {
     HttpGet get = new HttpGet(app.getProperty("web.baseUrl")+"/index.php");
     CloseableHttpResponse response = httpClient.execute(get);
     String body = getTextFrom(response);
-    return body.contains(String.format ("<span class=\"italic\">%s</span>",username)
+    return body.contains(String.format ("<span class=\"italic\">%s</span>",username));
   }
 }
