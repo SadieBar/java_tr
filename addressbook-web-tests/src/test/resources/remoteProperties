@@ -1,4 +1,0 @@
-web.baseUrl=http://192.168.1.67/addressbook/
-web.admin-login=admin
-web.admin-pass=secret
-selenium_server=http://192.168.1.254;4444/wd/hub
