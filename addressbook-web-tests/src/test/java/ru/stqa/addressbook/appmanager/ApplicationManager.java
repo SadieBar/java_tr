@@ -62,6 +62,8 @@ public class ApplicationManager {
     String target = System.getProperty("remote", "local");
     properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
 
+
+
     if ("".equals(properties.getProperty("selenium.server"))) {
       if (browser.equals(BrowserType.FIREFOX)) {
         wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true));
@@ -111,9 +113,9 @@ public class ApplicationManager {
     return dbHelper;
   }
 
-  public HttpSession newSession() {
-      return (new HttpSession(this));
-  }
+  //public HttpSession newSession() {
+  //    return (new HttpSession(this));
+  //}
   public String getProperty(String data) {
     return System.getProperty(data);
 
