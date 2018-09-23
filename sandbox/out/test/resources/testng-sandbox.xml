@@ -4,7 +4,8 @@
     <test name="Groups" >
         <classes>
             <!--<class name="ru.stqa.addressbook.tests.GroupCreationTests"/>-->
-            <class name="ru.stqa.addressbook.tests.GroupModificationTests" />
+            <class name="org.ruqa.TestDistance" />
+            <!--D:\Data\Work\2018\JavaTrainng for testers\-->
             <!-- <class name="ru.stqa.pft.addressbook.tests.GroupDeletionTests" />-->
         </classes>
     </test>
